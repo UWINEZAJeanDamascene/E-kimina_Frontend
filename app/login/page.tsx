@@ -8,17 +8,19 @@ import { ArrowLeft } from "lucide-react"
 
 const LoginPage = () => {
   return (
-    <section className="min-h-screen bg-blue-100/50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Back to Home */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-white/90 hover:text-white mb-3 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-medium">Back to Home</span>
-        </Link>
+    <section className="min-h-screen flex items-center justify-center p-4">
+      {/* Background Image */}
+      <img
+        src="https://images.pexels.com/photos/128867/coins-currency-investment-insurance-128867.jpeg"
+        alt="Background"
+        // className="absolute inset-0 bg-fill bg-center"
+        className="fixed inset-0 w-full h-full object-cover bg-fill bg-center -z-20"
+      />
 
+      {/* Dark overlay */}
+      <div className="fixed inset-0 w-full h-full bg-black/40 -z-20" />
+
+      <div className="w-full max-w-md">
         <Card className="bg-white rounded-3xl p-8 shadow-2xl">
           {/* Logo */}
           <div className="text-center mb-8">
