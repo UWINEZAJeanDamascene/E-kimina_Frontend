@@ -8,16 +8,18 @@ import { ArrowLeft, Mail, Phone, MapPin, Clock } from "lucide-react"
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-blue-100/50">
+    <div className="min-h-screen">
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-5">
-        {/* Back to Home */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-white/90 hover:text-white mb-3 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span className="text-sm font-medium">Back to Home</span>
-        </Link>
+        {/* Background Image */}
+        <img
+          src="https://images.pexels.com/photos/128867/coins-currency-investment-insurance-128867.jpeg"
+          alt="Background"
+          // className="absolute inset-0 bg-fill bg-center"
+          className="fixed inset-0 w-full h-full object-cover bg-fill bg-center -z-20"
+        />
+
+        {/* Dark overlay */}
+        <div className="fixed inset-0 w-full h-full bg-black/40 -z-20" />
 
         {/* Header */}
         <div className="text-center mb-8 md:mb-5">
