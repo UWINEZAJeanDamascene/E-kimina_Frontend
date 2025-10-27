@@ -1,12 +1,52 @@
+"use client"
+
+import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { useAuth } from "../context/AuthContext"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 const LoginPage = () => {
+  const { login } = useAuth()
+  const router = useRouter()
+
+  const [isSigningIn, setIsSigningIn] = useState(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  })
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    console.log("Logging in with:", formData)
+    try {
+      setIsSigningIn(true)
+
+      if (!formData.email || !formData.password) {
+        setIsSigningIn(false)
+        return toast.error("Email and Password are required.", {
+          description: "Please fill in the required fields.",
+        })
+      }
+
+      await login(formData.email, formData.password)
+      toast.success("Login successful!", {
+        description: "Welcome back!",
+      })
+      router.push("/")
+    } catch (error) {
+      console.error("Login failed:", error)
+    } finally {
+      setIsSigningIn(false)
+    }
+  }
+
   return (
     <section className="min-h-screen flex items-center justify-center p-4">
       {/* Background Image */}
@@ -31,7 +71,7 @@ const LoginPage = () => {
           </div>
 
           {/* Login Form */}
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleLogin}>
             <div className="space-y-2">
               <Label
                 htmlFor="email"
@@ -44,6 +84,9 @@ const LoginPage = () => {
                 type="email"
                 placeholder="your.email@example.com"
                 className="h-12 rounded-sm border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </div>
 
@@ -59,6 +102,10 @@ const LoginPage = () => {
                 type="password"
                 placeholder="Enter your password"
                 className="h-12 rounded-sm border-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                // onChange={handleChange}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
             </div>
 
@@ -80,8 +127,11 @@ const LoginPage = () => {
               </Link>
             </div>
 
-            <Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-sm text-lg font-medium cursor-pointer">
-              Login
+            <Button
+              type="submit"
+              className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-sm text-lg font-medium cursor-pointer"
+            >
+              {isSigningIn ? "Logging in..." : "Login"}
             </Button>
           </form>
 

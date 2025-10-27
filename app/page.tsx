@@ -1,7 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import Hero from "@/components/Hero"
+import { useAuth } from "./context/AuthContext"
+import { use } from "react"
 
 const HomePage = () => {
+  const { user, logout } = useAuth()
+
+  console.log("Logged in User", user)
+
   return (
     <div className="min-h-screen">
       {/* Main Hero Section with rounded container */}
@@ -21,6 +29,12 @@ const HomePage = () => {
         <div className="relative z-10 flex flex-col">
           {/* Main Content Area */}
           <Hero />
+          <button
+            onClick={logout}
+            className="px-2 py-1 rounded-md bg-white cursor-pointer hover:bg-white/50"
+          >
+            Logout
+          </button>
           {/* Bottom Section */}
           <div className="px-6">
             <div className="max-w-[1024px] mx-auto">
